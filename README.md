@@ -1,32 +1,47 @@
-# React + TypeScript + Vite
+# ant-design-practice
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Ant Design（antd v6）のコンポーネントの挙動を検証するための練習用リポジトリ。
 
-Currently, two official plugins are available:
+React 19 + TypeScript + Vite + react-router で構成し、検証ごとに1ページを追加していく。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 公開先: https://seekseep.github.io/ant-design-practice/
 
-## React Compiler
+## セットアップ
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+| コマンド | 内容 |
+| --- | --- |
+| `npm run dev` | 開発サーバーを起動 |
+| `npm run build` | 型チェック（`tsc -b`）＋ 本番ビルド |
+| `npm run preview` | ビルド結果をプレビュー |
+| `npm run lint` | oxlint を実行 |
+
+## 構成
+
+```
+src/
+  App.tsx                 ルーター定義（検証ページをここに登録する）
+  routes/
+    RootLayout.tsx        共通レイアウト
+    Menu.tsx              検証ページの一覧
+    practices/            検証ページ本体
+docs/                     検証結果のメモ
+```
+
+ルーティングは自動生成せず、`src/App.tsx` の配列に手動で登録する方針。
+
+## 検証ページの追加手順
+
+1. `src/routes/practices/` にコンポーネントを追加する
+2. `src/App.tsx` に import と `children` のルートを1行ずつ足す
+3. `src/routes/Menu.tsx` の `items` に1件足す
+4. 必要なら `docs/` に検証メモを書く
+
+## デプロイ
+
+`main` への push で GitHub Actions（`.github/workflows/deploy.yml`）が GitHub Pages にデプロイする。
+Pages 配下で配信するため、`vite.config.ts` の `base` と `createBrowserRouter` の `basename` に `/ant-design-practice/` を設定している。
