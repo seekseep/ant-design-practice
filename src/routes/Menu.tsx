@@ -7,7 +7,12 @@ const items = [
     to: '/practices/select-list-height',
     title: 'Select List Height',
     description: '<Select /> の選択肢の範囲の表示',
-  }
+  },
+  {
+    to: '/practices/static-modal-config-provider',
+    title: 'Static Modal と ConfigProvider',
+    description: 'Modal.confirm() などの静的メソッドが ConfigProvider を反映しないことの確認',
+  },
 ]
 
 function MenuPage() {
